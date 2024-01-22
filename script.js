@@ -6,3 +6,19 @@ for(let i = 1; i <=256; i++){
     div.classList.add("divItem")
     container.appendChild(div)
 }
+
+const divs = document.querySelectorAll(".divItem");
+
+divs.forEach(div =>{
+    div.addEventListener('mouseover', () =>{
+        div.classList.add("hoveredItem");
+    });
+
+    div.addEventListener('mouseout', () =>{
+        setTimeout(() => {
+            div.classList.remove("hoveredItem")
+          }, 400);
+        },
+        false,
+      );
+    });
