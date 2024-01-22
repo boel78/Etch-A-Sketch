@@ -1,43 +1,79 @@
 const container = document.querySelector("#container")
 
+let n = 16
+let color = "blue";
+
+createGrid(n)
+changeColor()
+
 //Skapa divs
-for (let i = 1; i <= 256; i++) {
-    const div = document.createElement('div')
-    div.style.cssText = "border: 2px solid black; height: 30px; width: 30px;"
-    div.classList.add("divItem")
-    container.appendChild(div)
+function createGrid(n){
+    color = "blue";
+    let grid = n * n
+    let borderSize = 2;
+    let d = Math.floor(550/n)- borderSize*2;
+    container.innerHTML = "";
+    for (let i = 1; i <= grid; i++) {
+        const div = document.createElement('div')
+        div.style.cssText = "border: 2px solid black; height: " +d + "px; width: " +d + "px;"
+        div.classList.add("divItem")
+        container.appendChild(div)
+    }
+    changeColor()
+    hover()
 }
 
 
+
 //Divs mouseover effekt
-const divs = document.querySelectorAll(".divItem");
+function hover(){
+    const divs = document.querySelectorAll(".divItem");
 
-let color = "blue";
-
-divs.forEach(div => {
-    div.addEventListener('mouseover', () => {
-        div.style.backgroundColor = color;
-        div.classList.add("hoveredItem");
-        
+    
+    divs.forEach(div => {
+        div.addEventListener('mouseover', () => {
+            div.style.backgroundColor = color;
+            div.classList.add("hoveredItem");
+            
+        });
+    
+        div.addEventListener('mouseout', () => {
+            setTimeout(() => {
+                div.classList.remove("hoveredItem")
+                div.style.backgroundColor = "white";
+            }, 400);
+        },
+            false,
+        );
     });
+}
 
-    div.addEventListener('mouseout', () => {
-        setTimeout(() => {
-            div.classList.remove("hoveredItem")
-            div.style.backgroundColor = "white";
-        }, 400);
-    },
-        false,
-    );
-});
 
 
 //Byt färg funktionalitet
-const btns = document.querySelectorAll('button');
+function changeColor(){
+    const btns = document.querySelectorAll('button');
 
-btns.forEach(btn => {
-    btn.addEventListener('click', () =>{
-        let newColor = btn.getAttribute('id');
-        color = newColor
-    } )
-});
+    btns.forEach(btn => {
+        btn.addEventListener('click', () =>{
+            if(btn.getAttribute('id') != "gridSettings"){
+                let newColor = btn.getAttribute('id');
+                color = newColor
+            }
+        } )
+    });
+}
+
+
+
+//Byt grid
+const btn = document.querySelector("#gridSettings")
+btn.addEventListener('click', () =>{
+    let input = (prompt("What size would you like on your grid?", "16"))
+    if(parseInt(input) > 0 || parseInt(input < 100)){
+        createGrid(input)
+    }
+    else{
+        alert("Input a number higher than 0 or lower than 100")
+    }
+})
