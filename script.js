@@ -82,7 +82,7 @@ function changeColor(){
 const btn = document.querySelector("#gridSettings")
 btn.addEventListener('click', () =>{
     let input = (prompt("What size would you like on your grid?", "16"))
-    if(parseInt(input) > 0 || parseInt(input < 100)){
+    if(parseInt(input) > 0 && parseInt(input) < 100){
         createGrid(input)
     }
     else{
