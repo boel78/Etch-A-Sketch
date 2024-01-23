@@ -2,6 +2,8 @@ const container = document.querySelector("#container")
 
 let n = 16
 let color = "blue";
+let rainbowInterval;
+let isRainbow = false;
 
 createGrid(n)
 changeColor()
@@ -53,10 +55,20 @@ function hover(){
 //Byt färg funktionalitet
 function changeColor(){
     const btns = document.querySelectorAll('button');
-
     btns.forEach(btn => {
         btn.addEventListener('click', () =>{
-            if(btn.getAttribute('id') != "gridSettings"){
+
+            if(btn.getAttribute('id') == "rainbow"){
+                console.log("pressed rainbow")
+                isRainbow = true;
+                window.rainbowInterval = setInterval(() => {
+                        rainbow();
+                    }, 700);
+            }
+
+            else if(btn.getAttribute('id') != "gridSettings" || btn.getAttribute('id') != "rainbow"){
+                isRainbow = false;
+                clearInterval(rainbowInterval);
                 let newColor = btn.getAttribute('id');
                 color = newColor
             }
@@ -77,3 +89,14 @@ btn.addEventListener('click', () =>{
         alert("Input a number higher than 0 or lower than 100")
     }
 })
+
+//Regnbåge
+
+function rainbow(){
+
+    if(isRainbow){
+        let newColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+        color = newColor
+    }
+
+}
